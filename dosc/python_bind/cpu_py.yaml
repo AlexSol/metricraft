@@ -1,0 +1,13 @@
+# plugins/cpu/cpu_py.yaml
+name: cpu
+runtime: python        # python (bind)
+entry: plugins/cpu/cpu_pybind.py
+schedule:
+  interval: 5s
+  jitter: 500ms
+timeout: 1500ms
+capabilities:
+  fs_read:
+    - /proc/stat
+    - /proc/loadavg
+env: {}

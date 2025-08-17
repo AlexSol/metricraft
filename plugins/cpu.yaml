@@ -1,0 +1,23 @@
+# plugins/cpu/cpu.yaml
+name: cpu
+runtime: exec                 # exec | wasm | lua
+entry: plugins/cpu/cpu_exec.py
+schedule:
+  interval: 10s
+  jitter: 1s
+timeout: 2s
+# resources:
+#   memory_mb: 32
+#   cpu_ms: 50
+capabilities:
+  fs_read:
+    - /proc/stat
+    - /proc/loadavg
+env: {}
+# capabilities:
+#   fs_read:
+#     - /proc/uptime
+#     - /var/log/pos/*.log
+#   network: false
+# env:
+#   STORE_ID: kyiv-001
