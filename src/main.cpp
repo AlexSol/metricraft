@@ -6,18 +6,30 @@
 #include <thread>
 #include <iostream>
 
-int main(){
+int main(int argc, char* argv[]){
     Scheduler sch;
     // Http http;
 
-    // MVP: завантажимо всі manifests/*.yaml
-    for (auto& p : std::filesystem::directory_iterator("/home/alex/fun_projects/metricraft/plugins"))
+    // завантажимо всі manifests/*.yaml
+
+    if (argc < 2) {
+        std::cerr << "Usage: " << argv[0] << " <plugins_directory>" << std::endl;
+        return 1;
+    }
+
+    const std::string plugins_dir = argv[1];
+
+    for (auto& p : std::filesystem::directory_iterator(plugins_dir))
     {
         if (p.path().extension() == ".yaml"){
             std::clog << "Found plugin manifest: " << p.path() << std::endl;
 
             auto m = Manifest::load(p.path().string());
             if (m.runtime=="exec") {
+                std::cout << "Plugin Name: " << m.name << std::endl;
+                std::cout << "Plugin manifest: " << p.path() << std::endl;
+
+
                 std::clog << "Plugin runtime: exec" << std::endl;
                 sch.add(Task{m, std::make_unique<ExecRunner>(m)});
             } else if (m.runtime=="python") {
@@ -34,6 +46,6 @@ int main(){
 
         std::clog << "Metrics for '" << name << "':\n";
     });
-    
+
     return 0;
 }

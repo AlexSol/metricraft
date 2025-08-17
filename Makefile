@@ -12,7 +12,7 @@ $(BUILD_DIR)/Makefile:
 	cmake -S . -B $(BUILD_DIR) $(CMAKE_ARGS)
 
 run:
-	$(BUILD_DIR)/$(PROJECT_NAME) // project variables
+	$(BUILD_DIR)/$(PROJECT_NAME) ./plugins
 
 build-debug:
 	cmake -S . -B $(BUILD_DIR) -DCMAKE_BUILD_TYPE=Debug -DSTATIC_CXX_RUNTIME=OFF
